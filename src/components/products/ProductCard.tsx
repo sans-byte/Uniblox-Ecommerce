@@ -9,7 +9,11 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { toast } from "sonner";
 import { formatPrice } from "@/utils/discount";
 
-export function ProductCard(product: Product) {
+type Props = {
+  product: Product;
+};
+
+export const ProductCard: React.FC<Props> = ({ product }) => {
   const { addToCart } = useStore();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -64,4 +68,4 @@ export function ProductCard(product: Product) {
       </CardFooter>
     </Card>
   );
-}
+};

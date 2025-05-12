@@ -8,8 +8,10 @@ import type {
   StoreStats,
   DiscountCode,
 } from "@/types";
-import { generateDiscountCode } from "@/utils/discount";
-
+import {
+  generateDiscountCode,
+  calculateDiscountAmount,
+} from "@/utils/discount";
 interface StoreState extends Auth {
   //product
   products: Product[];
@@ -17,9 +19,13 @@ interface StoreState extends Auth {
   //cart
   cart: CartItem[];
   addToCart: (product: Product) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
+  clearCart: () => void;
 
   //order
   orders: Order[];
+  checkout: (discountCode?: string) => Order;
 
   // discount
   discountCodes: DiscountCode[];
@@ -176,6 +182,81 @@ export const useStore = create<StoreState>((set, get) => ({
     }));
 
     return newDiscountCode;
+  },
+
+  removeFromCart: (productId) =>
+    set((state) => ({
+      cart: state.cart.filter((item) => item.product.id !== productId),
+    })),
+
+  updateQuantity: (productId, quantity) =>
+    set((state) => ({
+      cart: state.cart.map((item) =>
+        item.product.id === productId
+          ? { ...item, quantity: Math.max(1, quantity) }
+          : item
+      ),
+    })),
+
+  clearCart: () => set({ cart: [] }),
+
+  checkout: (discountCode) => {
+    const state = get();
+    const { cart, orders, discountCodes } = state;
+
+    if (cart.length === 0) {
+      throw new Error("Cannot checkout with an empty cart");
+    }
+
+    let discountAmount = 0;
+    let isValidCode = false;
+    let usedDiscountCode: string | undefined;
+
+    const total = cart.reduce(
+      (sum, item) => sum + item.product.price * item.quantity,
+      0
+    );
+
+    if (discountCode) {
+      isValidCode = state.validateDiscountCode(discountCode);
+
+      if (isValidCode) {
+        const validCode = discountCodes.find(
+          (dc) => dc.code === discountCode && !dc.isUsed
+        );
+        if (validCode) {
+          discountAmount = calculateDiscountAmount(total, validCode.percentage);
+          usedDiscountCode = discountCode;
+
+          set({
+            discountCodes: discountCodes.map((dc) =>
+              dc.code === discountCode ? { ...dc, isUsed: true } : dc
+            ),
+          });
+        }
+      }
+    }
+
+    const newOrder: Order = {
+      id: `order-${orders.length + 1}-${Date.now()}`,
+      items: [...cart],
+      total,
+      discountCode: usedDiscountCode,
+      discountAmount,
+      finalTotal: total - discountAmount,
+      createdAt: new Date(),
+    };
+
+    set({
+      orders: [...orders, newOrder],
+      cart: [],
+    });
+
+    if ((orders.length + 1) % state.nthOrder === 0) {
+      state.generateDiscountCode();
+    }
+
+    return newOrder;
   },
 
   validateDiscountCode: (code) => {

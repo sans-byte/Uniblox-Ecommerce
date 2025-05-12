@@ -24,6 +24,13 @@ export function generateDiscountCode(): string {
   return result;
 }
 
+export function calculateDiscountAmount(
+  amount: number,
+  percentage: number
+): number {
+  return (amount * percentage) / 100;
+}
+
 export function formatPrice(price: number): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
