@@ -13,7 +13,7 @@ type Prop = {};
 export const Footer: React.FC<Prop> = ({}) => {
   return (
     <footer className="bg-background border-t py-12">
-      <div className="container px-4 md:px-6">
+      <div className="container px-4 md:px-6 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
@@ -163,7 +163,7 @@ export const Footer: React.FC<Prop> = ({}) => {
 
         <div className="border-t mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} UniBlox. All rights reserved.
+            &copy; {new Date().getFullYear()} UniBlox. All rights reserved. Made with ♥️ sanskarj15@gmail.com
           </p>
           <div className="mt-4 sm:mt-0 flex space-x-4 text-sm text-muted-foreground">
             <a href="#" className="hover:text-foreground">
