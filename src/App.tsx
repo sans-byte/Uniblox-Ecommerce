@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { CartPage } from "./pages/CartPage";
+import { ProductsPage } from "./pages/ProductsPage";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
             <Route path="" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </main>
         <Footer />

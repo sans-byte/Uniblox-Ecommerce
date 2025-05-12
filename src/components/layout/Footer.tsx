@@ -59,7 +59,7 @@ export const Footer: React.FC<Prop> = ({}) => {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  to="/shop"
+                  to="/products"
                   className="text-muted-foreground hover:text-foreground"
                 >
                   All Products
@@ -67,7 +67,7 @@ export const Footer: React.FC<Prop> = ({}) => {
               </li>
               <li>
                 <Link
-                  to="/shop"
+                  to="/products"
                   className="text-muted-foreground hover:text-foreground"
                 >
                   New Arrivals
@@ -75,7 +75,7 @@ export const Footer: React.FC<Prop> = ({}) => {
               </li>
               <li>
                 <Link
-                  to="/shop"
+                  to="/products"
                   className="text-muted-foreground hover:text-foreground"
                 >
                   Best Sellers
@@ -163,7 +163,8 @@ export const Footer: React.FC<Prop> = ({}) => {
 
         <div className="border-t mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} UniBlox. All rights reserved. Made with ♥️ sanskarj15@gmail.com
+            &copy; {new Date().getFullYear()} UniBlox. All rights reserved. Made
+            with ♥️ sanskarj15@gmail.com
           </p>
           <div className="mt-4 sm:mt-0 flex space-x-4 text-sm text-muted-foreground">
             <a href="#" className="hover:text-foreground">

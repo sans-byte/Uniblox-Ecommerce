@@ -60,7 +60,7 @@ export const HomePage: React.FC<Prop> = ({}) => {
               Featured Products
             </h2>
             <Link
-              to="/shop"
+              to="/products"
               className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground"
             >
               View All <ArrowRight className="ml-1 h-4 w-4" />

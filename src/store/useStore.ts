@@ -64,7 +64,7 @@ const initialProducts: Product[] = [
     price: 5999.0,
     description: "Stylish and functional laptop backpack",
     image:
-      "https://images.pexels.com/photos/1338574/pexels-photo-1338574.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://modernquests.com/cdn/shop/files/inateck-roll-top-laptop-backpack-black-1.jpg?v=1716108665",
   },
   {
     id: "5",

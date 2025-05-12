@@ -8,6 +8,7 @@ import {
   Package,
   ShoppingBag,
   User,
+  UserLock,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "@/store/useStore";
@@ -57,6 +58,19 @@ export const Header: React.FC<Prop> = ({}) => {
             <span>Products</span>
           </Link>
         </Button>
+        {isAuthenticated && user?.role == "admin" && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs md:text-sm"
+            asChild
+          >
+            <Link to="/admin" className="flex items-center gap-1 md:gap-2">
+              <UserLock className="h-3 w-3 md:h-4 md:w-4" />
+              <span>Admin</span>
+            </Link>
+          </Button>
+        )}
       </div>
       <div className="ml-auto">
         {/* {User Menu} */}
