@@ -2,7 +2,6 @@ import {
   Facebook,
   Linkedin,
   Instagram,
-  ShoppingBag,
   Twitter,
 } from "lucide-react";
 import React from "react";

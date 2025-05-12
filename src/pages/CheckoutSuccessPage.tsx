@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import type { Order } from "@/types";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { OrderSummary } from "@/components/checkout/OrderSummary";
 
 export function CheckoutSuccessPage() {
