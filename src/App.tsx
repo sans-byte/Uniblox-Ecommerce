@@ -4,6 +4,7 @@ import { Footer } from "./components/layout/Footer";
 import { Toaster } from "sonner";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
+import { CartPage } from "./pages/CartPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/cart" element={<CartPage />} />
           </Routes>
         </main>
         <Footer />
