@@ -3,6 +3,7 @@ import { Header } from "./components/layout/Header";
 import { Footer } from "./components/layout/Footer";
 import { Toaster } from "sonner";
 import { HomePage } from "./pages/HomePage";
+import { LoginPage } from "./pages/LoginPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <main className="flex-1">
           <Routes>
             <Route path="" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </main>
         <Footer />

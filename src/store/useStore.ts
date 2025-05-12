@@ -8,6 +8,45 @@ interface Product {
   image: string;
 }
 
+interface User {
+  id: string;
+  email: string;
+  password: string;
+  role: string;
+}
+
+interface Auth {
+  user: User | null;
+  isAuthenticated: boolean;
+}
+
+interface StoreState extends Auth {
+  products: Product[];
+
+  // Auth
+  login: (email: string, password: string) => boolean;
+  logout: () => void;
+
+  //config
+  nthOrder: number;
+}
+
+// Static users
+const users: User[] = [
+  {
+    id: "1",
+    email: "user@example.com",
+    password: "user123",
+    role: "user",
+  },
+  {
+    id: "2",
+    email: "admin@example.com",
+    password: "admin123",
+    role: "admin",
+  },
+];
+
 // Dummy products
 const initialProducts: Product[] = [
   {
@@ -60,11 +99,25 @@ const initialProducts: Product[] = [
   },
 ];
 
-interface StoreState {
-  products: Product[];
-}
-
 export const useStore = create<StoreState>((set, get) => ({
+  //Auth State
+  user: null,
+  isAuthenticated: false,
+
+  //Product
   products: initialProducts,
   nthOrder: 3,
+
+  login: (email: string, password: string) => {
+    const user = users.find((u) => u.email === email && u.password == password);
+    if (user) {
+      set({ user: user, isAuthenticated: true });
+      return true;
+    }
+    return false;
+  },
+
+  logout: () => {
+    set({ user: null, isAuthenticated: false });
+  },
 }));

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Home, Package } from "lucide-react";
+import { Home, LogIn, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type Prop = {};
@@ -39,7 +39,10 @@ export const Header: React.FC<Prop> = ({}) => {
           size="sm"
           className="text-xs md:text-sm px-2 md:px-4 cursor-pointer"
         >
-          Login
+          <Link to="/login" className="flex items-center gap-1 md:gap-2">
+            <LogIn className="h-3 w-3 md:h-4 md:w-4" />
+            <span>Login</span>
+          </Link>
         </Button>
       </div>
     </nav>
