@@ -6,6 +6,7 @@ import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { CartPage } from "./pages/CartPage";
 import { ProductsPage } from "./pages/ProductsPage";
+import { AdminPage } from "./pages/AdminPage";
 
 function App() {
   return (

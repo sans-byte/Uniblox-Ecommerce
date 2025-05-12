@@ -22,3 +22,27 @@ export interface CartItem {
   product: Product;
   quantity: number;
 }
+
+export interface StoreStats {
+  totalItemsPurchased: number;
+  totalPurchaseAmount: number;
+  usedDiscountCodes: string[];
+  totalDiscountAmount: number;
+}
+
+export interface Order {
+  id: string;
+  items: CartItem[];
+  total: number;
+  discountCode?: string;
+  discountAmount: number;
+  finalTotal: number;
+  createdAt: Date;
+}
+
+export interface DiscountCode {
+  code: string;
+  percentage: number;
+  isUsed: boolean;
+  createdAt: Date;
+}

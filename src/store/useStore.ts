@@ -1,12 +1,33 @@
 import { create } from "zustand";
-import type { Product, User, CartItem, Auth } from "@/types";
+import type {
+  Product,
+  User,
+  CartItem,
+  Auth,
+  Order,
+  StoreStats,
+  DiscountCode,
+} from "@/types";
+import { generateDiscountCode } from "@/utils/discount";
 
 interface StoreState extends Auth {
+  //product
   products: Product[];
 
   //cart
   cart: CartItem[];
   addToCart: (product: Product) => void;
+
+  //order
+  orders: Order[];
+
+  // discount
+  discountCodes: DiscountCode[];
+  generateDiscountCode: () => DiscountCode | null;
+  validateDiscountCode: (code: string) => boolean;
+
+  //stats
+  getStoreStats: () => StoreStats;
 
   // Auth
   login: (email: string, password: string) => boolean;
@@ -107,6 +128,59 @@ export const useStore = create<StoreState>((set, get) => ({
 
   logout: () => {
     set({ user: null, isAuthenticated: false });
+  },
+
+  getStoreStats: () => {
+    const { orders } = get();
+
+    const totalItemsPurchased = orders.reduce((total, order) => {
+      return (
+        total +
+        order.items.reduce((itemTotal, item) => itemTotal + item.quantity, 0)
+      );
+    }, 0);
+
+    const totalPurchaseAmount = orders.reduce(
+      (total, order) => total + order.finalTotal,
+      0
+    );
+
+    const usedDiscountCodes = orders
+      .filter((order) => order.discountCode)
+      .map((order) => order.discountCode as string);
+
+    const totalDiscountAmount = orders.reduce(
+      (total, order) => total + order.discountAmount,
+      0
+    );
+
+    return {
+      totalItemsPurchased,
+      totalPurchaseAmount,
+      usedDiscountCodes,
+      totalDiscountAmount,
+    };
+  },
+
+  generateDiscountCode: () => {
+    const code = generateDiscountCode();
+    const newDiscountCode: DiscountCode = {
+      code,
+      percentage: 10,
+      isUsed: false,
+      createdAt: new Date(),
+    };
+
+    set((state) => ({
+      discountCodes: [...state.discountCodes, newDiscountCode],
+    }));
+
+    return newDiscountCode;
+  },
+
+  validateDiscountCode: (code) => {
+    const { discountCodes } = get();
+    return discountCodes.some((dc) => dc.code === code && !dc.isUsed);
   },
 
   addToCart: (product) =>

@@ -9,11 +9,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { toast } from "sonner";
 import { formatPrice } from "@/utils/discount";
 
-interface ProductCardProps {
-  product: Product;
-}
-
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard(product: Product) {
   const { addToCart } = useStore();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -51,7 +47,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <CardFooter className="p-4 pt-0">
         <Button
           className="w-full transition-all"
-          variant={true ? "outline" : "default"}
+          variant={isAdding ? "outline" : "default"}
           onClick={handleAddToCart}
           disabled={isAdding}
         >

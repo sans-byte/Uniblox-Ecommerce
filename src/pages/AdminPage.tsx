@@ -1,16 +1,16 @@
 import { useStore } from "@/store/useStore";
-import { StoreStats } from "@/components/admin/StoreStats";
-import { DiscountCodeGenerator } from "@/components/admin/DiscountCodeGenerator";
-import { OrdersList } from "@/components/admin/OrdersList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShieldAlert } from "lucide-react";
+import { StoreStats } from "@/components/admin/StoreStats";
+import { DiscountCodeGenerator } from "@/components/admin/DiscountCodeGenerator";
+import { OrdersList } from "@/components/admin/OrderList";
 
 export function AdminPage() {
   const { orders, getStoreStats } = useStore();
   const stats = getStoreStats();
 
   return (
-    <div className="container px-4 py-12">
+    <div className="container px-4 py-12 m-auto">
       <div className="flex items-center gap-2 mb-8">
         <ShieldAlert className="h-6 w-6" />
         <h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>

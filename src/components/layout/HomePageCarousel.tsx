@@ -14,10 +14,13 @@ import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Check, Plus } from "lucide-react";
 import { formatPrice } from "@/utils/discount";
+import { toast } from "sonner";
+import type { Product } from "@/types";
 
 export function HomePageCarousel() {
+  const { addToCart } = useStore();
+  const [isAdding, setIsAdding] = React.useState(false);
   const { products } = useStore();
-
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
@@ -55,10 +58,21 @@ export function HomePageCarousel() {
                         <p>{formatPrice(product.price)}</p>
                       </div>
                       <Button
-                        className="w-full transition-all mb-1 cursor-pointer"
-                        variant={true ? "outline" : "default"}
+                        className="w-full transition-all"
+                        variant={isAdding ? "outline" : "default"}
+                        onClick={() => {
+                          setIsAdding(true);
+                          addToCart(product);
+
+                          toast.success(`Added ${product.name} to cart`);
+
+                          setTimeout(() => {
+                            setIsAdding(false);
+                          }, 1500);
+                        }}
+                        disabled={isAdding}
                       >
-                        {false ? (
+                        {isAdding ? (
                           <>
                             <Check className="mr-2 h-4 w-4" /> Added
                           </>
