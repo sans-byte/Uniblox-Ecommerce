@@ -2,7 +2,7 @@ import * as React from "react";
 import { useStore } from "@/store/useStore";
 import Autoplay from "embla-carousel-autoplay";
 
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -15,10 +15,9 @@ import { Button } from "../ui/button";
 import { Check, Plus } from "lucide-react";
 import { formatPrice } from "@/utils/discount";
 import { toast } from "sonner";
-import type { Product } from "@/types";
 
 export function HomePageCarousel() {
-  const { addToCart } = useStore();
+  const { addToCart, isAuthenticated } = useStore();
   const [isAdding, setIsAdding] = React.useState(false);
   const { products } = useStore();
   const plugin = React.useRef(
@@ -70,7 +69,7 @@ export function HomePageCarousel() {
                             setIsAdding(false);
                           }, 1500);
                         }}
-                        disabled={isAdding}
+                        disabled={isAdding || !isAuthenticated}
                       >
                         {isAdding ? (
                           <>

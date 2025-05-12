@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
-  const { addToCart } = useStore();
+  const { addToCart, isAuthenticated } = useStore();
   const [isAdding, setIsAdding] = useState(false);
 
   const handleAddToCart = () => {
@@ -53,7 +53,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
           className="w-full transition-all"
           variant={isAdding ? "outline" : "default"}
           onClick={handleAddToCart}
-          disabled={isAdding}
+          disabled={isAdding || !isAuthenticated}
         >
           {isAdding ? (
             <>
