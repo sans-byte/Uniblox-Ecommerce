@@ -68,7 +68,11 @@ export function LoginPage() {
               />
             </div>
 
-            <Button type="submit" className="w-full" variant="outline">
+            <Button
+              type="submit"
+              className="w-full bg-black text-white cursor-pointer"
+              variant="outline"
+            >
               Login
             </Button>
           </form>

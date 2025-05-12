@@ -1,27 +1,12 @@
 import { create } from "zustand";
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-}
-
-interface User {
-  id: string;
-  email: string;
-  password: string;
-  role: string;
-}
-
-interface Auth {
-  user: User | null;
-  isAuthenticated: boolean;
-}
+import type { Product, User, CartItem, Auth } from "@/types";
 
 interface StoreState extends Auth {
   products: Product[];
+
+  //cart
+  cart: CartItem[];
+  addToCart: (product: Product) => void;
 
   // Auth
   login: (email: string, password: string) => boolean;
@@ -52,7 +37,7 @@ const initialProducts: Product[] = [
   {
     id: "1",
     name: "Wireless Headphones",
-    price: 129.99,
+    price: 12999.00,
     description: "Premium wireless headphones with noise cancellation",
     image:
       "https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -60,7 +45,7 @@ const initialProducts: Product[] = [
   {
     id: "2",
     name: "Smartwatch",
-    price: 199.99,
+    price: 1599.00,
     description: "Feature-rich smartwatch with health tracking",
     image:
       "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -68,7 +53,7 @@ const initialProducts: Product[] = [
   {
     id: "3",
     name: "Bluetooth Speaker",
-    price: 79.99,
+    price: 7900.00,
     description: "Portable Bluetooth speaker with deep bass",
     image:
       "https://images.pexels.com/photos/1279107/pexels-photo-1279107.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -76,7 +61,7 @@ const initialProducts: Product[] = [
   {
     id: "4",
     name: "Laptop Backpack",
-    price: 59.99,
+    price: 5999.00,
     description: "Stylish and functional laptop backpack",
     image:
       "https://images.pexels.com/photos/1338574/pexels-photo-1338574.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -92,7 +77,7 @@ const initialProducts: Product[] = [
   {
     id: "6",
     name: "Coffee Mug",
-    price: 19.99,
+    price: 1199.00,
     description: "Ceramic coffee mug with elegant design",
     image:
       "https://images.pexels.com/photos/1566308/pexels-photo-1566308.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -107,6 +92,9 @@ export const useStore = create<StoreState>((set, get) => ({
   //Product
   products: initialProducts,
   nthOrder: 3,
+  cart: [],
+  orders: [],
+  discountCodes: [],
 
   login: (email: string, password: string) => {
     const user = users.find((u) => u.email === email && u.password == password);
@@ -120,4 +108,25 @@ export const useStore = create<StoreState>((set, get) => ({
   logout: () => {
     set({ user: null, isAuthenticated: false });
   },
+
+  addToCart: (product) =>
+    set((state) => {
+      const existingItem = state.cart.find(
+        (item) => item.product.id === product.id
+      );
+
+      if (existingItem) {
+        return {
+          cart: state.cart.map((item) =>
+            item.product.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          ),
+        };
+      }
+
+      return {
+        cart: [...state.cart, { product, quantity: 1 }],
+      };
+    }),
 }));

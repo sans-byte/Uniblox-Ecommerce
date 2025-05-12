@@ -5,14 +5,20 @@ import {
   PremuimQuality,
 } from "@/assets/svg";
 import { HomePageCarousel } from "@/components/layout/HomePageCarousel";
+import { ProductGrid } from "@/components/products/ProductGrid";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useStore } from "@/store/useStore";
 
 type Prop = {};
 
 export const HomePage: React.FC<Prop> = ({}) => {
+  const { products } = useStore();
+
+  const featuredProducts = products.slice(0, 4);
+
   return (
     <>
       <div className="container px-4 py-12 sm:py-16 md:py-24 mx-auto">
@@ -48,7 +54,6 @@ export const HomePage: React.FC<Prop> = ({}) => {
           </div>
         </section>
 
-        {/* Featured products */}
         <section className="py-12">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
@@ -61,10 +66,9 @@ export const HomePage: React.FC<Prop> = ({}) => {
               View All <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           </div>
-          {/* <ProductGrid products={featuredProducts} /> */}
+          <ProductGrid products={featuredProducts} />
         </section>
 
-        {/* Features section */}
         <section className="py-12">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-center mb-12">
             Why Choose Us

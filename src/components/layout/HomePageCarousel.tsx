@@ -13,12 +13,13 @@ import {
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Check, Plus } from "lucide-react";
+import { formatPrice } from "@/utils/discount";
 
 export function HomePageCarousel() {
   const { products } = useStore();
 
   const plugin = React.useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
+    Autoplay({ delay: 3000, stopOnInteraction: true })
   );
 
   return (
@@ -51,7 +52,7 @@ export function HomePageCarousel() {
                           {product.name}
                         </span>
                         <p>{product.description}</p>
-                        <p>{product.price}</p>
+                        <p>{formatPrice(product.price)}</p>
                       </div>
                       <Button
                         className="w-full transition-all mb-1 cursor-pointer"
